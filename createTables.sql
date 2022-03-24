@@ -1,6 +1,5 @@
 CREATE TABLE `Container` (
     `ID` int  NOT NULL ,
-    `reciverSignalPin` int  NOT NULL ,
     `loadingDate` datetime  NOT NULL ,
     PRIMARY KEY (
         `ID`

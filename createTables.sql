@@ -1,18 +1,12 @@
 CREATE TABLE `Container` (
-    `ID` int  NOT NULL ,
-    `loadingDate` datetime  NOT NULL ,
-    PRIMARY KEY (
-        `ID`
-    )
+    `ID` int PRIMARY KEY AUTOINCREMENT ,
+    `loadingDate` datetime  NOT NULL
 );
 
 CREATE TABLE `Readings` (
-    `ID` int  NOT NULL ,
+    `ID` int PRIMARY KEY AUTOINCREMENT ,
     `temp` decimal  NOT NULL ,
     `humid` decimal  NOT NULL ,
-    `containerID` int  NOT NULL ,
-    PRIMARY KEY (
-        `ID`
-    )
+    `containerID` int  NOT NULL
 );
 

@@ -1,3 +1,45 @@
+
+//############################
+//######   Ajax    ########
+//############################
+
+//This ajax can post stuff with ajax over to the pyhton backend
+function postAjax(inputUrl, inputData){
+      $.ajax({
+        url: 'http://127.0.0.1/' + inputUrl,
+        data: inputData,
+        type: 'POST',
+        success: function(response){
+          console.log(response);
+        },
+        error: function(error){
+          console.log(error);
+        }
+      });
+}
+
+//This ajax can get data from the database
+function getAjax(inputUrl, inputData){
+  $.ajax({
+    type:"GET",
+    dataType: "json",
+    data:{'name':'data'},
+    url: "http://127.0.0.1/" + inputUrl,
+    success: function(data){
+        buf1=data;
+        console.log(data);
+    },
+    error: function(error){
+      console.log(error);
+    }
+})
+}
+
+
+//############################
+//###### Line charts ########
+//############################
+
 document.getElementById("tempChart").style.display = "none";
 document.getElementById("humidChart").style.display = "none";
 
@@ -68,12 +110,11 @@ const configHumid = {
   options: {}
 };
 const mytempChart = new Chart(document.getElementById("tempChart"), configTemp);
-const myHumidChart = new Chart(
-  document.getElementById("humidChart"),
-  configHumid
-);
+const myHumidChart = new Chart(document.getElementById("humidChart"),configHumid);
 
+//############################
 //######## Pie charts ########
+//############################
 function sliceSize(dataNum, dataTotal) {
   return (dataNum / dataTotal) * 360;
 }

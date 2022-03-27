@@ -1,5 +1,7 @@
 # weGrain
-School iot project
+School iot project. We make a battery powered esp32 solution which can record humidity via a DHT22, sends it with LoRa to a battery powered Raspberry Pi Zero which hosts a Flask app. The App has a python and sqlite3 backend, which then gets used on a user interface, which shows pie and line charts of the data.
+Right now it's in the prototype stage. The idea of the project was to help farmers in Africa monitor temperature and humidity of their harvested foods to better avoid contamination, excess humidity and overall quality 
+
 
 ## Linux setup
 

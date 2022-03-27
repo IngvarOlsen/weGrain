@@ -46,5 +46,6 @@ while True:
     lora.send_to_wait("30, 20, 2", SERVER_ADDRESS)
     # print("sent")
     sleep(10)
+    #Needs to add logic which puts the esp32 into deepSleep once packet have been recived or the packets have been sent a couple of times
     #machine.deepsleep(100000)     #10000ms sleep time
 

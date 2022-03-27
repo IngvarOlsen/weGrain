@@ -1,5 +1,9 @@
 from time import sleep
 from ulora import LoRa, ModemConfig, SPIConfig
+import dht
+import machine
+from machine import Pin, ADC
+
 # based on https://github.com/martynwheeler/u-lora
 
 # PINOUT 
@@ -13,6 +17,9 @@ from ulora import LoRa, ModemConfig, SPIConfig
 # CS <--> GPIO 5
 # Lora Parameters
 
+sensor = dht.DHT22(Pin(4))
+batRead = ADC(Pin(34))
+
 RFM95_RST = 27
 RFM95_SPIBUS = SPIConfig.esp32_1
 RFM95_CS = 5
@@ -25,9 +32,19 @@ SERVER_ADDRESS = 222
 # initialise radio
 lora = LoRa(RFM95_SPIBUS, RFM95_INT, CLIENT_ADDRESS, RFM95_CS, reset_pin=RFM95_RST, freq=RF95_FREQ, tx_power=RF95_POW, acks=True)
 
-# loop and send data
+
+#ContainerId needs to be hard set
+containerId = 2
+
 while True:
-    lora.send_to_wait("Insert data here", SERVER_ADDRESS)
-    print("sent")
-    ## XXXXX Deep sleep 1 hour
-    sleep(1)
+    sensor.measure()
+    #Battery level will be sent in next iteration
+    batRead_value = batRead.read()
+    #Temp, hum, containerID
+    dataToSend = str(sensor.temperature()) + " , " + str(sensor.humidity()) + " , " + str(containerId) 
+    print(dataToSend)
+    lora.send_to_wait("30, 20, 2", SERVER_ADDRESS)
+    # print("sent")
+    sleep(10)
+    #machine.deepsleep(100000)     #10000ms sleep time
+

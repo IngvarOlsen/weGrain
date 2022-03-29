@@ -2,7 +2,7 @@ from time import sleep
 from ulora import LoRa, ModemConfig, SPIConfig
 import dht
 import machine
-from machine import Pin, ADC
+from machine import Pin
 
 # based on https://github.com/martynwheeler/u-lora
 
@@ -18,7 +18,6 @@ from machine import Pin, ADC
 # Lora Parameters
 
 sensor = dht.DHT22(Pin(4))
-batRead = ADC(Pin(34))
 
 RFM95_RST = 27
 RFM95_SPIBUS = SPIConfig.esp32_1
@@ -36,16 +35,19 @@ lora = LoRa(RFM95_SPIBUS, RFM95_INT, CLIENT_ADDRESS, RFM95_CS, reset_pin=RFM95_R
 #ContainerId needs to be hard set
 containerId = 2
 
-while True:
-    sensor.measure()
-    #Battery level will be sent in next iteration
-    batRead_value = batRead.read()
+# loop and send data
+while False:
+    print("Going to sleep byebye")
+    machine.deepsleep(1000000)
+    
+
+while False:
     #Temp, hum, containerID
+    sensor.measure()
     dataToSend = str(sensor.temperature()) + " , " + str(sensor.humidity()) + " , " + str(containerId) 
     print(dataToSend)
     lora.send_to_wait("30, 20, 2", SERVER_ADDRESS)
     # print("sent")
     sleep(10)
-    #Needs to add logic which puts the esp32 into deepSleep once packet have been recived or the packets have been sent a couple of times
-    #machine.deepsleep(100000)     #10000ms sleep time
+    machine.deepsleep(100000)     #10000ms sleep time
 

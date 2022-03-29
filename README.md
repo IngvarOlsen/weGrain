@@ -39,3 +39,30 @@ pip install adafruit-circuitpython-rfm9x
 pip install adafruit-blinka
 pip install board
 ```
+
+## Pin Layouts
+
+### Raspberry Pi Zero pin
+```
+Vin to Raspberry Pi 3.3V
+GND to Raspberry Pi Ground
+RFM G0 to Raspberry Pi GPIO #5
+RFM RST to Raspberry Pi GPIO #25
+RFM CLK to Raspberry Pi SCK
+RFM MISO to Raspberry Pi MISO
+RFM MOSI to Raspberry Pi MOSI
+RFM CS to Raspberry Pi CE1
+```
+
+### Esp32 Pins
+ ```
+VIN to Esp32 3v3
+GND to Esp32 GND
+G0 to Esp32 GPIO 0 (CAN BLOCK FROM FILESYSTEM ESP32 WHILE INSERTED)
+SCK to Esp32 GPIO 14
+MISO to Esp32 GPIO 12
+MOSI to Esp32 GPIO 13
+CS to Esp32 GPIO 5
+```
+
+

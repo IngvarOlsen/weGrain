@@ -1,10 +1,17 @@
 
+<!-- Refresh the page every 1 min as a placeholder, will make it dynamic with AJAX in future -->
+<meta http-equiv="refresh" content="60">
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css" integrity="sha512-10/jx2EXwxxWqCLX/hHth/vu2KY3jCF70dCQB8TSgNjbCVAC/8vai53GfMDrO2Emgwccf2pJqxct9ehpzG+MTw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="stylesheet" href="../static/style.css" />
 
 
 <script src="{{url_for('static', filename='/jquery.js')}}"></script>
 <script src="{{url_for('static', filename='/chart.js')}}"></script>
+
+<!-- For fetch, another way to do ajax -->
+<!-- <script src="{{url_for('static', filename='/polyfill.js')}}"></script>
+<script src="{{url_for('static', filename='/fetch.js')}}"></script> -->
 
 
 <!-- <script src="../static/jquery.js"></script> -->
@@ -37,11 +44,12 @@
 <div class="pie-charts">
   <div class="pieID--container1 pie-chart--wrapper">
     <h2>Container 1 Corn </h2>
-    <p>Humid:10%</p>
+    <p>Humid: {{humid}}</p>
+    <p>Temp: {{temp}}</p>
     <div class="pie-chart">
       <div class="pie-chart__pie"></div>
       <ul class="pie-chart__legend">
-        <li><em>Humidity</em><span>10</span></li>
+        <li><em>Humidity</em><span>{{humid}}</span></li>
         <li style="display:none;"><em></em><span>100</span></li>
 
       </ul>
@@ -50,6 +58,7 @@
   <div class="pieID--container2 pie-chart--wrapper">
     <h2>Container 2 Grain</h2>
     <p>Humid:20%</p>
+    <p>Temp:32 c</p>
     <div class="pie-chart">
       <div class="pie-chart__pie"></div>
       <ul class="pie-chart__legend">
@@ -62,6 +71,7 @@
   <div class="pieID--container3 pie-chart--wrapper">
     <h2>Container 3 Seeds</h2>
     <p style="color:red;">Humid:57%</p>
+    <p>Temp:34 c</p>
     <div class="pie-chart">
       <div class="pie-chart__pie"></div>
       <ul class="pie-chart__legend">

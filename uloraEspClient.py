@@ -2,7 +2,8 @@ from time import sleep
 from ulora import LoRa, ModemConfig, SPIConfig
 import dht
 import machine
-from machine import Pin
+from machine import ADC, Pin
+import batread_func
 
 # based on https://github.com/martynwheeler/u-lora
 
@@ -17,7 +18,7 @@ from machine import Pin
 # CS <--> GPIO 5
 # Lora Parameters
 
-sensor = dht.DHT22(Pin(4))
+sensor = dht.DHT22(Pin(16))
 
 RFM95_RST = 27
 RFM95_SPIBUS = SPIConfig.esp32_1
@@ -31,23 +32,35 @@ SERVER_ADDRESS = 222
 # initialise radio
 lora = LoRa(RFM95_SPIBUS, RFM95_INT, CLIENT_ADDRESS, RFM95_CS, reset_pin=RFM95_RST, freq=RF95_FREQ, tx_power=RF95_POW, acks=True)
 
-
 #ContainerId needs to be hard set
 containerId = 2
 
-# loop and send data
+# create function for returning current battery voltage
+def get_battery_voltage():
+    batread = ADC(Pin(32))
+    batread_value = batread.read()
+    batmult = 6.3 / 4096 # Battery voltage at 100% SoC / by ADC resolution
+    batread_Volt = round(batread_value * batmult, 2)
+    # print(batread_Volt) only used for testing
+    return batread_Volt
+# get_battery_voltage() only used for testing
+
+
+# test of deepsleep
 while False:
     print("Going to sleep byebye")
     machine.deepsleep(1000000)
     
-
-while False:
+# loop and send data
+while True:
     #Temp, hum, containerID
     sensor.measure()
-    dataToSend = str(sensor.temperature()) + " , " + str(sensor.humidity()) + " , " + str(containerId) 
-    print(dataToSend)
-    lora.send_to_wait("30, 20, 2", SERVER_ADDRESS)
-    # print("sent")
-    sleep(10)
-    machine.deepsleep(100000)     #10000ms sleep time
-
+    dataToSend = str(sensor.temperature()) + " , " + str(sensor.humidity()) + " , " + str(containerId) + " , " + str(batread_func.get_battery_voltage())
+    for i in range(5): # sends 5 readings for reliability
+        print(dataToSend)
+        lora.send_to_wait(dataToSend, SERVER_ADDRESS)
+        # print("sent")
+        sleep(1)
+    sleep(5)
+    print("Going to deepsleep for 10 seconds.")
+    machine.deepsleep(10000)     #10000ms sleep time

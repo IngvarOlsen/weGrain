@@ -3,7 +3,7 @@ from ulora import LoRa, ModemConfig, SPIConfig
 import dht
 import machine
 from machine import ADC, Pin
-import batread_func
+
 
 # based on https://github.com/martynwheeler/u-lora
 

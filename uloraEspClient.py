@@ -55,7 +55,7 @@ while False:
 while True:
     #Temp, hum, containerID
     sensor.measure()
-    dataToSend = str(sensor.temperature()) + " , " + str(sensor.humidity()) + " , " + str(containerId) + " , " + str(batread_func.get_battery_voltage())
+    dataToSend = str(sensor.temperature()) + " , " + str(sensor.humidity()) + " , " + str(containerId) + " , " + str(get_battery_voltage())
     for i in range(5): # sends 5 readings for reliability
         print(dataToSend)
         lora.send_to_wait(dataToSend, SERVER_ADDRESS)
